@@ -8,15 +8,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.praktikium.yandex.model.MainPage;
-import static org.junit.Assert.assertEquals;
 
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class TestImportantQuestions {
-    private int question_id;
-    private int answer_id;
-    private String answer_text;
-
+    private final int question_id;
+    private final int answer_id;
+    private final String answer_text;
+    private WebDriver driver;
 
     public TestImportantQuestions(int question_id, int answer_id, String answer_text) {
         this.question_id = question_id;
@@ -32,27 +32,24 @@ public class TestImportantQuestions {
         };
     }
 
-    private WebDriver driver;
-
     @Before
     public void setUp() {
         driver = new ChromeDriver();
-       //driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
     }
 
     @Test
-     public void testQuestionsExpandOpenCheckText() {
+    public void testQuestionsExpandOpenCheckText() {
         MainPage homePageExpand = new MainPage(driver);
         homePageExpand.openMainPage();
         homePageExpand.scrollToQuestions();
         homePageExpand.clickExpand(By.id("accordion__heading-" + this.question_id));
         homePageExpand.getText(By.id("accordion__panel-" + this.answer_id));
-        assertEquals(homePageExpand.getText(By.id("accordion__panel-" + this.answer_id)),answer_text);
+        assertEquals(homePageExpand.getText(By.id("accordion__panel-" + this.answer_id)), answer_text);
     }
 
     @After
     public void closeBrowser() {
         driver.quit();
     }
-
 }

@@ -1,41 +1,34 @@
 package ru.praktikium.yandex.model;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class MainPage {
-
-    private WebDriver driver;
+    private static final By QUESTIONS_BLOCK = By.className("Home_FourPart__1uthg"); // весь блок с выпадающими вопросами
+    private static final By ORDER_BUTTON_HEADER = By.className("Button_Button__ra12g"); // "Заказать" в хедере
+    private static final By ORDER_BUTTON_2 = By.xpath("/.//div[4]/div[2]/div[5]/button"); // "Заказать" в середине страницы
+    private static final By COOKIE_BUTTON = By.className("App_CookieButton__3cvqF"); // кнопка принять куки
+    private final WebDriver driver;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private static final By QUESTIONS_BLOCK = By.className("Home_FourPart__1uthg"); // весь блок с выпадающими вопросами
-    private static final By ORDER_BUTTON_HEADER = By.className("Button_Button__ra12g"); // "Заказать" в хедере
-    private static final By ORDER_BUTTON_2 = By.xpath("/.//div[4]/div[2]/div[5]/button"); // "Заказать" в середине страницы
-    private static final By COOKIE_BUTTON = By.className("App_CookieButton__3cvqF"); // кнопка принять куки
-
     public void openMainPage() {
         driver.get("https://qa-scooter.praktikum-services.ru/");
-
     }
+
     public void closeCookie() {
         driver.findElement(COOKIE_BUTTON).click();
     }
 
     public void scrollToQuestions() {
-
         WebElement element = driver.findElement(QUESTIONS_BLOCK);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
+
     public void clickExpand(By element) {
         driver.findElement(element).click();
     }
@@ -49,12 +42,7 @@ public class MainPage {
     }
 
     public void clickMiddleOrderButton() {
-
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(ORDER_BUTTON_2));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(ORDER_BUTTON_2));
         driver.findElement(ORDER_BUTTON_2).click();
     }
-
-
-
-
 }
